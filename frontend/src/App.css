@@ -1,0 +1,138 @@
+body {
+  background-color: #121212;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Added to ensure the absolute bubble positions correctly */
+  position: relative; 
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vh; /* Pushed down slightly to give the top bubble breathing room */
+}
+
+/* 1. TOP LEFT LEVEL BUBBLE STYLING */
+.level-bubble {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  background-color: #2a2a2a;
+  color: #00ffcc;
+  padding: 8px 18px;
+  border-radius: 20px; /* Creates the bubble/pill shape */
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+}
+
+h1 {
+  margin-bottom: 0;
+  letter-spacing: 2px;
+}
+
+.status-message {
+  height: 30px; 
+  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.glow-text { color: #00ffcc; }
+.success-text { color: #00ff66; letter-spacing: 2px; }
+.danger-text { color: #ff3366; letter-spacing: 1px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 70px);
+  grid-template-rows: repeat(5, 70px);
+  gap: 6px; 
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #1e1e1e;
+  border-radius: 6px;
+}
+
+.tile {
+  width: 70px;
+  height: 70px;
+  background-color: #2a2a2a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #555;
+  border-radius: 4px; 
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.grid.interactive .tile:hover {
+  background-color: #3a3a3a;
+  cursor: pointer;
+}
+
+.tile.active {
+  background-color: #00ffcc;
+  color: #121212;
+  box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc;
+  transform: scale(1.05); 
+  transition: none; 
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #121212;
+  border: none;
+  border-radius: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover { background-color: #e0e0e0; }
+
+.next-btn {
+  background-color: #00ffcc;
+  color: #121212;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+.next-btn:hover { background-color: #00ccaa; }
+
+/* 2. RESTART BUTTON BUBBLE STYLING */
+.restart-btn {
+  background-color: #ff3366;
+  color: #ffffff;
+  border-radius: 30px; /* Curves the edges into a bubble */
+  text-transform: none; /* Allows the normal capitalization of "Start Again" */
+  font-size: 1.1rem;
+  padding: 10px 24px;
+}
+.restart-btn:hover { background-color: #cc2952; }
+
+/* 3. FULL RESTART BUTTON STYLING */
+.full-restart-btn {
+  margin-top: 50px;
+  background-color: transparent;
+  color: #666; /* Dim gray so it fades into the background */
+  border: 1px solid #444;
+  font-size: 0.8rem;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.full-restart-btn:hover {
+  background-color: #333;
+  color: #ffffff;
+  border-color: #666;
+}
