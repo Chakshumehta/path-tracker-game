@@ -25,18 +25,20 @@ function App() {
       const data = await response.json()
       
       setSequence(data.path)
-      playSequence(data.path, currentLevel)
+      playSequence(data.path, data.speed)
     } catch (error) {
       console.error("Make sure the Python server is running!", error)
       setGameState('idle')
     }
   }
 
-  const playSequence = (path, currentLevel) => {
+  const playSequence = (path, speed) => {
     let index = 0;
     
     // The aggressive speed math we updated!
-    const speed = Math.max(150, 900 - (currentLevel * 50)); 
+    //const speed = Math.max(150, 900 - (currentLevel * 50)); 
+    // We deleted the aggressive local speed math! 
+    // It is now using the 'speed' variable calculated by Python.
 
     const interval = setInterval(() => {
       if (index < path.length) {

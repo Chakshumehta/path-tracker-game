@@ -15,15 +15,18 @@ app.add_middleware(
 @app.get("/generate-sequence")
 def generate_sequence(level: int = 1):
     
-    # Stays at 5 tiles until Level 15. After Level 15, it adds 1 tile per level.
-    if level <= 15:
-        sequence_length = 5
-    else:
-        sequence_length = 5 + (level - 15)
+    # 1. TILE PACING: Starts at 3 tiles, adds 1 extra tile every 2 levels.
+    # Level 1 = 3 tiles, Level 4 = 5 tiles, Level 10 = 8 tiles
+    sequence_length = 3 + (level // 2)
+    
+    # 2. SPEED PACING: Starts at a slow 1000ms, drops by 40ms each level.
+    # The max() function ensures it never drops below 250ms so it stays humanly playable.
+    speed_ms = max(250, 1000 - (level * 40))
     
     path = []
     for _ in range(sequence_length):
         next_tile = random.randint(0, 24) 
         path.append(next_tile)
         
-    return {"level": level, "path": path}
+    # We now send the calculated speed back to React along with the path!
+    return {"level": level, "path": path, "speed": speed_ms}
