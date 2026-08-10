@@ -21,7 +21,7 @@ function App() {
     setUserSequence([]) 
     
     try {
-      const response = await fetch(`http://127.0.0.1:8000/generate-sequence?level=${currentLevel}`)
+      const response = await fetch(`https://path-tracker-game.onrender.com/generate-sequence?level=${currentLevel}`)
       const data = await response.json()
       
       setSequence(data.path)
