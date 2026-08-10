@@ -1,138 +1,132 @@
-body {
-  background-color: #121212;
-  color: #ffffff;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* Added to ensure the absolute bubble positions correctly */
-  position: relative; 
+/* --- APP.CSS (CLEAN & SOLID CYAN DINO UPDATE) --- */
+
+:root {
+  --glow-color: #00ffcc; 
+  --text-dark: #0f172a;
 }
 
 .game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10vh; /* Pushed down slightly to give the top bubble breathing room */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative; 
+  overflow: hidden; 
 }
 
-/* 1. TOP LEFT LEVEL BUBBLE STYLING */
-.level-bubble {
+/* 1. FAINT, TRANSLUCENT DINOSAURS */
+.game-container::before {
+  content: "";
   position: absolute;
-  top: 25px;
-  left: 25px;
-  background-color: #2a2a2a;
-  color: #00ffcc;
-  padding: 8px 18px;
-  border-radius: 20px; /* Creates the bubble/pill shape */
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyB2aWV3Qm94PScwIDAgMTAwIDEwMCc+PHBhdGggZD0nTTU1LDE0IEM1NCwxMiA1MiwxMSA1MCwxMSBDNDksMTEgNDgsMTIsNDcsMTQgTDQ1LDIwIEM0NCwyMiA0MiwyMyA0MCwyMyBDMzgsMjMgMzYsMjIgMzUsMjAgTDMzLDE0IEMzMiwxMiAzMCwxMSAyOCwxMSBDMjcsMTEgMjYsMTIgMjUsMTQgTDIzLDIwIEMyMiwyMiAyMCwyMyAxOCwyMyBDMTYsMjMgMTQsMjIgMTMsMjAgTDExLDE0IEMxMCwxMiA4LDExIDYsMTEgQzUsMTEgNCwxMiAzLDE0IEwyLDIwIEMxLDIyIDMsMjUgNSwyNSBDNiwyNSA3LDI0IDgsMjMgTDEwLDE3IEMxMCwxNiAxMSwxNSAxMiwxNSBDMTMsMTUgMTQsMTYgMTQsMTcgTDE2LDIzIEMxNywyNSA5LDI3IDIsMjcgTDIsMzEgQzIsMzQgNCwzNiA2LDM2IEw5LDM2IEMxMiwzNiAxNCwzNCAxNCwzMSBMMTQsMjcgQzE0LDI4IDE1LDI5IDE2LDI5IEMxNiwyOSAxNywyOCAxNywyNyBMMTksMjEgQzE5LDIwIDIwLDE5IDIxLDE5IEMyMiwxOSAyMywyMCAyMywyMSBMMjUsMjcgQzI2LDI5IDIwLDMxIDEzLDMxIEwxMywzNSBDMTMsMzggMTUsNDAgMTcsNDAgTDIwLDQwIEMyMyw0MCAyNSwzOCAyNSwzNSBMMjUsMzEgQzI1LDMyIDI2LDMzIDI3LDMzIEMyNywzMyAyOCwzMiAyOCwzMSBMMzAsMjUgQzMwLDI0IDMxLDIzIDMyLDIzIEMzMywyMyAzNCwyNCAzNCwyNSBMMzYsMzEgQzM3LDMzIDMxLDM1IDI0LDM1IEwyNCwzOSBDMjQsNDIgMjYsNDQgMjgsNDQgTDMxLDQ0IEMzNCw0NCAzNiw0MiAzNiwzOSBMMzYsMzUgQzM2LDM2IDM3LDM3IDM4LDM3IEMzOCwzNyAzOSwzNiAzOSwzNSBMNDEsMjkgQzQxLDI4IDQyLDI3IDQzLDI3IEM0NCwyNyA0NSwyOCA0NSwyOSBMNDcsMzUgQzQ4LDM3IDQyLDM5IDM1LDM5IEwzNSw0MyBDMzUsNDYgMzcsNDggMzksNDggTDQyLDQ4IEM0NSw0OCA0Nyw0NiA0Nyw0MyBMNDcsMzkgQzQ3LDQwIDQ4LDQxIDQ5LDQxIEM0OSw0MSA1MCw0MCA1MCwzOSBMNTIsMzMgQzUyLDMyIDUzLDMxIDU0LDMxIEM1NSwzMSA1NiwzMiA1NiwzMyBMNTgsMzkgQzU5LDQxIDUzLDQzIDQ2LDQzIEw0Niw0NyBDNDYsNTAgNDgsNTIgNTAsNTIgTDUzLDUyIEM1Niw1MiA1OCw1MCA1OCw0NyBMNTgsNDMgQzU4LDQ0IDU5LDQ1IDYwLDQ1IEM2MCw0NSA2MSw0NCA2MSw0MyBMNjMsMzcgQzYzLDM2IDY0LDM1IDY1LDM1IEM2NiwzNSA2NywzNiA2NywzNyBMNjksNDMgQzcwLDQ1IDY0LDQ3IDU3LDQ3IEw1Nyw1MSBDNTcsNTQgNTksNTYgNjEsNTYgTDY0LDU2IEM2Nyw1NiA2OSw1NCA2OSw1MSBMNjksNDcgQzY5LDQ4IDcwLDQ5IDcxLDQ5IEM3MSw0OSA3Miw0OCA3Miw0NyBMODAsMjIgQzgyLDcwIDgwLDk0IDYwLDk0IEMzOCw5NCAzMyw5NCAzMyw4MCBMMzMsNzAgTDMwLDcwIEMyNiw3MCAyNSw3MSAyNSw3NSBMMjUsODUgQzI1LDg4IDI3LDkwIDMwLDkwIEwzNSw5MCBDMzgsOTAgNDAsODggNDAsODUgTDQwLDgwIEM0MCw3OSAzOSw3OCAzOCw3OCBDMzgsNzggMzcsNzkgMzcsODAgTDcxLDIwIFogTTM3LDczIEw0MSw3MyBMNDEsNzcgTDM3LDc3IFogTTU1LDE4IEM1NiwxOCA1NywxNyA1NywxNiBDNTcsMTUgNTYsMTQgNTUsMTQgQzU0LDE0IDUzLDE1IDUzLDE2IEM1MywxNyA1NCwxOCA1NSwxOCBaIE0yOCwxOCBDMjksMTggMzAsMTcgMzAsMTYgQzMwLDE1IDI5LDE0IDI4LDE0IEMyNywxNCAyNiwxNSAyNiwxNiBDMjYsMTcgMjcsMTggMjgsMTggWiBNMTMsMTggQzE0LDE4IDE1LDE3IDE1LDE2IEMxNSwxNSAxNCwxNCAxMywxNCBDMTIsMTQgMTEsMTUgMTEsMTYgQzExLDE3IDEyLDE4IDEzLDE4IFonIGZpbGw9J25vbmUnIHN0cm9rZT0nIzAwZmZjYycgc3Ryb2tlLXdpZHRoPScyJyBzdHJva2Utb3BhY2l0eT0nMC41Jy8+PC9zdmc+');
+  background-size: 120px 120px; 
+  background-repeat: repeat;
+  z-index: 0; 
+  /* Lowered opacity dramatically so it's just a faint wallpaper */
+  opacity: 0.12; 
+}
+
+h1, .game-container > *, .controls, .grid, .level-bubble, .status-message {
+  position: relative;
+  z-index: 10;
 }
 
 h1 {
-  margin-bottom: 0;
+  text-transform: uppercase;
   letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  font-weight: 900;
+  color: white;
 }
 
-.status-message {
-  height: 30px; 
-  margin-top: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-.glow-text { color: #00ffcc; }
-.success-text { color: #00ff66; letter-spacing: 2px; }
-.danger-text { color: #ff3366; letter-spacing: 1px; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(5, 70px);
-  grid-template-rows: repeat(5, 70px);
-  gap: 6px; 
-  margin-top: 10px;
-  padding: 15px;
-  background-color: #1e1e1e;
-  border-radius: 6px;
-}
-
-.tile {
-  width: 70px;
-  height: 70px;
-  background-color: #2a2a2a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #555;
-  border-radius: 4px; 
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-}
-
-.grid.interactive .tile:hover {
-  background-color: #3a3a3a;
-  cursor: pointer;
-}
-
-.tile.active {
-  background-color: #00ffcc;
-  color: #121212;
-  box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc;
-  transform: scale(1.05); 
-  transition: none; 
-}
-
-.controls {
+.level-bubble {
+  background-color: white;
+  color: var(--text-dark);
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-top: 20px;
 }
 
-button {
-  padding: 12px 24px;
-  background-color: #ffffff;
-  color: #121212;
-  border: none;
-  border-radius: 2px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s;
+/* 2. SOLID GAME BOX */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  background-color: #1e1e1e; /* Solid dark background just like before */
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 }
 
-button:hover { background-color: #e0e0e0; }
-
-.next-btn {
-  background-color: #00ffcc;
-  color: #121212;
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-}
-.next-btn:hover { background-color: #00ccaa; }
-
-/* 2. RESTART BUTTON BUBBLE STYLING */
-.restart-btn {
-  background-color: #ff3366;
-  color: #ffffff;
-  border-radius: 30px; /* Curves the edges into a bubble */
-  text-transform: none; /* Allows the normal capitalization of "Start Again" */
-  font-size: 1.1rem;
-  padding: 10px 24px;
-}
-.restart-btn:hover { background-color: #cc2952; }
-
-/* 3. FULL RESTART BUTTON STYLING */
-.full-restart-btn {
-  margin-top: 50px;
-  background-color: transparent;
-  color: #666; /* Dim gray so it fades into the background */
+/* 3. SOLID TILES */
+.tile {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2a2a2a; /* Solid dark tile */
   border: 1px solid #444;
-  font-size: 0.8rem;
-  padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 8px; 
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgba(0, 255, 204, 0.5); /* Dimmed cyan numbers */
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.full-restart-btn:hover {
-  background-color: #333;
-  color: #ffffff;
-  border-color: #666;
+.tile:hover {
+  background-color: #3a3a3a;
+}
+
+/* ACTIVE TILE GLOW */
+.tile.active {
+  background-color: var(--glow-color); 
+  color: var(--text-dark); 
+  border-color: var(--glow-color);
+  box-shadow: 0 0 15px var(--glow-color), 0 0 30px rgba(0, 255, 204, 0.6); 
+  transform: scale(1.05); 
+}
+
+/* PROFESSIONAL BUTTONS */
+/* MINIMAL GHOST BUTTONS */
+button {
+  background-color: transparent; 
+  color: var(--glow-color); /* Cyan text */
+  border: 1px solid rgba(0, 255, 204, 0.5); /* Thin, dim cyan outline */
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: rgba(0, 255, 204, 0.1); /* Very faint cyan fill on hover */
+  border-color: var(--glow-color); /* Outline gets brighter */
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.2); /* Very soft, subtle glow */
+  transform: translateY(-2px); 
+}
+
+
+.success-text { color: var(--glow-color); font-weight: bold; text-shadow: 0 0 5px var(--glow-color); }
+.danger-text { color: #ef4444; font-weight: bold; } 
+.glow-text { animation: blink 1s infinite alternate; }
+
+@keyframes blink {
+  from { color: rgba(255, 255, 255, 0.6); }
+  to { color: var(--glow-color); text-shadow: 0 0 10px var(--glow-color); }
 }
