@@ -1,27 +1,165 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap');
 
+/* --- 1. BASE LAYOUT & BODY --- */
 body {
   background-color: #121212;
   color: #ffffff;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  /* Updated font-family to prioritize Google Sans, with Outfit as a clean fallback */
   font-family: 'Google Sans', 'Product Sans', 'Outfit', 'Segoe UI', Tahoma, sans-serif;
   position: relative; 
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* --- 2. TOP APPLICATION HEADER --- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #cccccc;
+}
+
+.user-badge strong {
+  color: #00ffcc;
+}
+
+.change-name-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #888;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.change-name-btn:hover {
+  background: #2a2a2a;
+  color: #ffffff;
+  border-color: #666;
+}
+
+.leaderboard-toggle-btn {
+  background-color: #00ffcc;
+  color: #121212;
+  font-weight: bold;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.leaderboard-toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+  background-color: #00ccaa;
+}
+
+/* --- 3. WELCOME / NAME REGISTRATION SCREEN --- */
+.welcome-screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.welcome-card {
+  background-color: #1e1e1e;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.welcome-card h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.welcome-card p {
+  color: #888;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.name-form input {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #121212;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+  font-family: inherit;
+}
+
+.name-form input:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+}
+
+.start-btn {
+  background-color: #00ffcc;
+  color: #121212;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.start-btn:hover {
+  background-color: #00ccaa;
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
+}
+
+/* --- 4. GAME CONTAINER & MECHANICS --- */
 .game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10vh; 
+  margin-top: 5vh; 
+  position: relative;
 }
 
-/* 1. TOP LEFT LEVEL BUBBLE STYLING */
 .level-bubble {
   position: absolute;
-  top: 25px;
+  top: -20px;
   left: 25px;
   background-color: #2a2a2a;
   color: #00ffcc;
@@ -33,7 +171,6 @@ body {
 }
 
 h1 {
-  /* Added the 36px font size and the 20px bottom margin for spacing */
   font-size: 36px;
   margin-bottom: 20px;
   letter-spacing: 2px;
@@ -42,7 +179,6 @@ h1 {
 .status-message {
   height: 30px; 
   margin-top: 10px;
-  /* Reduced to 0.9rem to make the subtitle cleaner */
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -50,6 +186,7 @@ h1 {
 .success-text { color: #00ff66; letter-spacing: 2px; }
 .danger-text { color: #ff3366; letter-spacing: 1px; }
 
+/* 5x5 GRID & TILES */
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 70px);
@@ -88,6 +225,7 @@ h1 {
   transition: none; 
 }
 
+/* BUTTON CONTROLS */
 .controls {
   margin-top: 20px;
 }
@@ -114,7 +252,6 @@ button:hover { background-color: #e0e0e0; }
 }
 .next-btn:hover { background-color: #00ccaa; }
 
-/* 2. RESTART BUTTON BUBBLE STYLING */
 .restart-btn {
   background-color: #ff3366;
   color: #ffffff;
@@ -125,9 +262,7 @@ button:hover { background-color: #e0e0e0; }
 }
 .restart-btn:hover { background-color: #cc2952; }
 
-/* 3. FULL RESTART BUTTON STYLING */
 .full-restart-btn {
-  /* Reduced margin-top to 15px to bring the buttons closer together */
   margin-top: 15px;
   background-color: transparent;
   color: #666; 
@@ -141,4 +276,120 @@ button:hover { background-color: #e0e0e0; }
   background-color: #333;
   color: #ffffff;
   border-color: #666;
+}
+
+/* --- 5. SLIDE-OUT LEADERBOARD DRAWER --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 320px;
+  height: 100vh;
+  background-color: #1e1e1e;
+  border-left: 1px solid #2a2a2a;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.sidebar-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.close-btn:hover {
+  color: #ffffff;
+}
+
+.sidebar-content {
+  padding: 1.2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.no-scores {
+  color: #666;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.leaderboard-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.leaderboard-list li.current-user-rank {
+  border: 1px solid #00ffcc;
+  background-color: rgba(0, 255, 204, 0.1);
+}
+
+.rank {
+  font-weight: bold;
+  color: #00ffcc;
+  width: 30px;
+}
+
+.player-name {
+  flex: 1;
+  text-align: left;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-score {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 90;
 }
