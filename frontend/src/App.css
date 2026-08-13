@@ -393,3 +393,72 @@ button:hover { background-color: #e0e0e0; }
   backdrop-filter: blur(2px);
   z-index: 90;
 }
+/* ==========================================
+   MOBILE RESPONSIVE FIXES (Screens <= 600px)
+   ========================================== */
+@media (max-width: 600px) {
+  /* 1. Compact Header for Small Screens */
+  .app-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .user-badge {
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+
+  .change-name-btn {
+    padding: 2px 6px;
+    font-size: 0.7rem;
+  }
+
+  .leaderboard-toggle-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  /* 2. Fix Title & Level Bubble Overlap */
+  .game-container {
+    margin-top: 2vh;
+  }
+
+  .level-bubble {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .status-message {
+    font-size: 0.8rem;
+  }
+
+  /* 3. Resize 5x5 Grid to Fit Phones Comfortably */
+  .grid {
+    grid-template-columns: repeat(5, 55px);
+    grid-template-rows: repeat(5, 55px);
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .tile {
+    width: 55px;
+    height: 55px;
+    font-size: 1rem;
+  }
+
+  /* 4. Full-Screen Drawer on Mobile */
+  .sidebar {
+    width: 85vw;
+    right: -90vw;
+  }
+}
