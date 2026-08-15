@@ -86,12 +86,11 @@ def submit_score(username: str, score: int, db: Session = Depends(get_db)):
         db.commit()
         return {"message": "User registered and score saved!", "username": username, "score": score}
 
-# 6. Leaderboard Endpoint (Returns Top Players)
+# 6. Infinite Leaderboard Endpoint (Returns ALL Players)
 @app.get("/leaderboard/")
-def get_leaderboard(limit: int = 10, db: Session = Depends(get_db)):
+def get_leaderboard(db: Session = Depends(get_db)):
     return (
         db.query(UserScore)
         .order_by(UserScore.score.desc())
-        .limit(limit)
         .all()
     )
