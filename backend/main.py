@@ -50,19 +50,19 @@ def get_db():
     finally:
         db.close()
 
-# 4. Your Original Sequence Generator Endpoint
+# 4. Sequence Generator Endpoint (Continuous, Smooth Progression)
 @app.get("/generate-sequence")
 def generate_sequence(level: int = 1):
-    # 1. TILE PACING: Starts at 3 tiles, adds 1 extra tile every 2 levels.
-    sequence_length = 3 + (level // 2)
-    
-    # 2. SPEED PACING: Starts at 1000ms, drops by 40ms each level (min 250ms).
-    speed_ms = max(250, 1000 - (level * 40))
-    
-    path = []
-    for _ in range(sequence_length):
-        next_tile = random.randint(0, 24) 
-        path.append(next_tile)
+    if level < 10:
+        # Levels 1-9: Standard progression
+        sequence_length = 3 + (level // 2)
+        speed_ms = 1000 - (level * 40)
+    else:
+        # Level 10+: Smooth step to 600ms, adding 1 tile every 3 levels
+        sequence_length = 7 + ((level - 10) // 3)
+        speed_ms = max(400, 600 - ((level - 10) * 10))
+
+    path = [random.randint(0, 24) for _ in range(sequence_length)]
         
     return {"level": level, "path": path, "speed": speed_ms}
 
