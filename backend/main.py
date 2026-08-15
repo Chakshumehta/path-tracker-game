@@ -50,17 +50,14 @@ def get_db():
     finally:
         db.close()
 
-# 4. Sequence Generator Endpoint (Continuous, Smooth Progression)
+# 4. Sequence Generator Endpoint (Gentle, Continuous Curve)
 @app.get("/generate-sequence")
 def generate_sequence(level: int = 1):
-    if level < 10:
-        # Levels 1-9: Standard progression
-        sequence_length = 3 + (level // 2)
-        speed_ms = 1000 - (level * 40)
-    else:
-        # Level 10+: Smooth step to 600ms, adding 1 tile every 3 levels
-        sequence_length = 7 + ((level - 10) // 3)
-        speed_ms = max(400, 600 - ((level - 10) * 10))
+    # Adds only 1 extra tile every 3 levels
+    sequence_length = 3 + (level // 3)
+
+    # Starts at 1000ms, gently drops by only 20ms per level (minimum speed capped at 500ms)
+    speed_ms = max(500, 1000 - (level * 20))
 
     path = [random.randint(0, 24) for _ in range(sequence_length)]
         
@@ -72,7 +69,6 @@ def submit_score(username: str, score: int, db: Session = Depends(get_db)):
     existing_user = db.query(UserScore).filter(UserScore.username == username).first()
 
     if existing_user:
-        # Update score only if it beats their previous personal high score
         if score > existing_user.score:
             existing_user.score = score
             existing_user.updated_at = datetime.utcnow()
@@ -80,7 +76,6 @@ def submit_score(username: str, score: int, db: Session = Depends(get_db)):
             return {"message": "New high score!", "username": username, "score": score}
         return {"message": "Score recorded, but not a new high score.", "score": existing_user.score}
     else:
-        # Register new unique username and save score
         new_user = UserScore(username=username, score=score)
         db.add(new_user)
         db.commit()
