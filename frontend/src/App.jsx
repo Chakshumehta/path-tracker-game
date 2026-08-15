@@ -4,7 +4,7 @@ import './App.css'
 const BACKEND_URL = "https://path-tracker-game.onrender.com";
 
 function App() {
-  // Player state & Welcome screen toggle
+  // Player state & Welcome screen toggle (Permanent handle)
   const [username, setUsername] = useState(() => {
     return localStorage.getItem('pathTrackerUsername') || ''
   })
@@ -13,8 +13,10 @@ function App() {
     return !!localStorage.getItem('pathTrackerUsername')
   })
 
-  // Sidebar toggle state (like Gemini chat drawer)
+  // Sidebar toggle state & loading state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(false)
+  const [leaderboard, setLeaderboard] = useState([])
 
   // Game mechanics state
   const [level, setLevel] = useState(() => {
@@ -25,7 +27,6 @@ function App() {
   const [userSequence, setUserSequence] = useState([])
   const [activeTile, setActiveTile] = useState(null)
   const [gameState, setGameState] = useState('idle') 
-  const [leaderboard, setLeaderboard] = useState([])
 
   // Save level and username to localStorage
   useEffect(() => {
@@ -38,19 +39,22 @@ function App() {
     }
   }, [username])
 
-  // Fetch leaderboard on initial load
+  // Initial fetch on component mount
   useEffect(() => {
     fetchLeaderboard()
   }, [])
 
   // 1. FETCH LEADERBOARD
   const fetchLeaderboard = async () => {
+    setIsLoadingLeaderboard(true)
     try {
       const response = await fetch(`${BACKEND_URL}/leaderboard/`)
       const data = await response.json()
       setLeaderboard(data)
     } catch (error) {
       console.error("Error fetching leaderboard:", error)
+    } finally {
+      setIsLoadingLeaderboard(false)
     }
   }
 
@@ -135,18 +139,13 @@ function App() {
     }
   }
 
-  const handleChangeName = () => {
-    setIsNameSet(false)
-    setTempName(username)
-  }
-
   // --- WELCOME / REGISTRATION SCREEN ---
   if (!isNameSet) {
     return (
       <div className="welcome-screen">
         <div className="welcome-card">
           <h1>THE PATH TRACKER</h1>
-          <p>Test your memory sequence and compete on the global leaderboard.</p>
+          <p>Choose your player name to start tracking paths.</p>
           
           <form onSubmit={handleNameSubmit} className="name-form">
             <input 
@@ -173,14 +172,17 @@ function App() {
       <header className="app-header">
         <div className="user-badge">
           <span>🎮 Player: <strong>{username}</strong></span>
-          <button className="change-name-btn" onClick={handleChangeName}>Change</button>
         </div>
 
         <button 
           className="leaderboard-toggle-btn"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          onClick={() => {
+            const nextState = !isSidebarOpen;
+            setIsSidebarOpen(nextState);
+            if (nextState) fetchLeaderboard();
+          }}
         >
-          🏆 Leaderboard
+          🏆 LEADERBOARD
         </button>
       </header>
 
@@ -241,15 +243,17 @@ function App() {
         )}
       </main>
 
-      {/* Slide-out Sidebar Drawer */}
+      {/* Infinite Leaderboard Sidebar */}
       <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <h2>🏆 TOP PLAYERS</h2>
+          <h2>🏆 LEADERBOARD</h2>
           <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>✕</button>
         </div>
 
         <div className="sidebar-content">
-          {leaderboard.length === 0 ? (
+          {isLoadingLeaderboard ? (
+            <p className="no-scores">Loading scores...</p>
+          ) : leaderboard.length === 0 ? (
             <p className="no-scores">No scores recorded yet!</p>
           ) : (
             <ol className="leaderboard-list">
@@ -265,7 +269,7 @@ function App() {
         </div>
       </aside>
 
-      {/* Overlay backdrop to close sidebar when clicking outside */}
+      {/* Overlay backdrop */}
       {isSidebarOpen && (
         <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
       )}
